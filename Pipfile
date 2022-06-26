@@ -9,6 +9,8 @@ django-ckeditor = "*"
 django-crispy-forms = "*"
 pillow = "*"
 gunicorn = "*"
+dj-database-url = "*"
+psycopg2 = "*"
 
 [dev-packages]
 

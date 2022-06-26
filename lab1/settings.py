@@ -157,3 +157,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
   'django.template.context_processors.request',
   # ...
 )
+
+if 'DATABASE_URL' in os.environ:
+    import dj_database_url
+    DATABASES = {'default': dj_database_url.config()}

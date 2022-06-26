@@ -1,0 +1,65 @@
+{% extends 'file_editor/base.html' %}
+{% load static %}
+{% block head_additional %}
+    {{ form.media }}
+    <link rel="stylesheet" href="{% static 'css/file_edit.css' %}">
+{% endblock %}
+{% block title %}File{% endblock %}
+
+{% block content %}
+    <div class="container__inner">
+        <input type="file" id="file-input"/>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-success" id="save-file_btn" type="submit">Save file</button>
+        </form>
+    </div>
+
+    {% if request.activated %}
+        <div class="premium-buttons mt-5">
+            <button class="btn btn-info" onclick="printFile()">Print file</button>
+        </div>
+    {% endif %}
+{% endblock content %}]
+
+{% block js %}
+    <script>
+        {#window.alert('Buy our soft');#}
+
+        function readSingleFile(e) {
+            var file = e.target.files[0];
+            let imageUrl = URL.createObjectURL(file);
+            console.log(imageUrl);
+            if (!file) {
+                return;
+            }
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var contents = e.target.result;
+                displayContents(contents);
+            };
+            reader.readAsText(file);
+
+        }
+
+        function displayContents(contents) {
+            CKEDITOR.instances.id_content.setData(contents);
+        }
+
+        document.getElementById('file-input')
+            .addEventListener('change', readSingleFile, false);
+
+        function printFile() {
+            var printContents = CKEDITOR.instances.id_content.getData();
+            var mywindow = window.open('', 'PRINT',);
+            mywindow.document.write(printContents);
+            mywindow.document.close(); // necessary for IE >= 10
+            mywindow.focus(); // necessary for IE >= 10*/
+
+            mywindow.print();
+            mywindow.close()
+        }
+
+    </script>
+{% endblock js %}

@@ -1,0 +1,88 @@
+{% extends 'file_editor/base.html' %}
+
+{% block title %}Captcha Check{% endblock %}
+
+{% block head_additional %}
+    <style>
+        .captcha_image_input {
+            display: none;
+        }
+
+        .img_item.selected {
+            outline: 7px solid aquamarine;
+            transform: scale(.9);
+        }
+
+        .images_box {
+            max-width: 300px;
+        {#margin: 0 auto;#} display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: 1fr;
+            grid-column-gap: 10px;
+            grid-row-gap: 10px;
+        }
+
+        .img_item {
+            background-size: cover;
+            width: 100px;
+            height: 120px;
+        {#overflow: hidden;#}
+        }
+
+        .captcha-image {
+            width: auto;
+            height: 100%;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        .main_container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 9em;
+        }
+
+        .captcha_title {
+            margin-bottom: .8em;
+        }
+
+        .captcha-btn {
+            margin: .8em auto;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <form action="" class="main_form" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="captcha" value="{{ captcha.pk }}">
+        <h4 class="captcha_title">Select images with {{ captcha.subject }}</h4>
+        <div class="images_box">
+            {% for im in cap_images %}
+                <div class="img_item" style="background-image: url('{{ im.image.url }}')"
+                     data-image_id="image{{ im.pk }}">
+                    <input type="checkbox" name="images" id="image{{ im.pk }}" value="{{ im.pk }}"
+                           class="captcha_image_input">
+                </div>
+            {% endfor %}
+        </div>
+        <button class="btn btn-primary captcha-btn">
+            <span class="glyphicon glyphicon-ok"></span>
+            Submit
+        </button>
+    </form>
+{% endblock %}
+
+{% block js %}
+    <script>
+        document.querySelectorAll('.img_item').forEach(function (el) {
+            el.addEventListener('click', function (e) {
+                e.preventDefault();
+                var input = document.querySelector('#' + e.target.dataset.image_id);
+                input.checked = !input.checked;
+                e.target.classList.toggle('selected');
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,19 @@
+main {
+    display: flex;
+    flex-wrap: nowrap;
+    height: 100vh;
+    height: -webkit-fill-available;
+    max-height: 100vh;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.main_content {
+    margin-left: 3em;
+    margin-top: 2em;
+}
+
+.sidebar {
+    height: 85vh;
+    margin: 1em 0;
+}

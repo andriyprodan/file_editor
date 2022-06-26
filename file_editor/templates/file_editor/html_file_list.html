@@ -1,0 +1,38 @@
+{% extends 'file_editor/base.html' %}
+{% load static %}
+
+{% block head_additional %}
+    <link rel="stylesheet" href="{% static 'css/file_list.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% if request.activated %}
+        <form method="get" class="input-group file_search">
+            <input type="search" class="form-control rounded" placeholder="Search by name" aria-label="Search"
+                   aria-describedby="search-addon" name="filename"/>
+            <button type="button" class="btn btn-outline-primary">search</button>
+        </form>
+    {% endif %}
+    <table class="table file_list">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">URL</th>
+            <th scope="col">Content</th>
+            <th scope="col">Info</th>
+            <th scope="col">Edit</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in object_list %}
+            <tr>
+                <th scope="row">{{ item.pk }}</th>
+                <td><a href="{{ item.file.url }}">{{ item.file }}</a></td>
+                <td>{{ item.content | safe | truncatechars_html:50 }}</td>
+                <td>{{ item.info }}</td>
+                <td><a href="{% url 'files:update' item.pk %}"><i class="fa fa-edit"></i></a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/ba019e07df.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    {% block head_additional %}{% endblock %}
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+<main class="container">
+    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light sidebar" style="width: 280px;">
+        <a href="{% url 'files:home' %}"
+           class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+            <svg class="bi me-2" width="40" height="32">
+                <use xlink:href="#bootstrap"></use>
+            </svg>
+            <span class="fs-4">Hello</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a href="{% url 'files:home' %}" class="nav-link link-dark">
+                    <svg class="bi me-2" width="16" height="16">
+                        <use xlink:href="#home"></use>
+                    </svg>
+                    Create file
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'files:list' %}" class="nav-link link-dark">
+                    <svg class="bi me-2" width="16" height="16">
+                        <use xlink:href="#home"></use>
+                    </svg>
+                    All files
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'users:activate' %}" class="nav-link link-dark">
+                    <svg class="bi me-2" width="16" height="16">
+                        <use xlink:href="#speedometer2"></use>
+                    </svg>
+                    Activate product
+                </a>
+            </li>
+            <hr>
+            <li class="nav-item">
+                <a href="{% url 'captcha:captcha_check' %}" class="nav-link link-dark">
+                    <svg class="bi me-2" width="16" height="16">
+                        <use xlink:href="#speedometer2"></use>
+                    </svg>
+                    Turing test
+                </a>
+            </li>
+
+        </ul>
+        <hr>
+    </div>
+    <div class="main_content">
+        {% block content %}{% endblock %}
+    </div>
+</main>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let nav_links = document.querySelectorAll('.nav-link');
+        for (nl of nav_links) {
+            if (nl.href === window.location.href) {
+                nl.classList.add('active');
+                nl.classList.remove('link-dark');
+            }
+        }
+    })
+</script>
+{% block js %}{% endblock %}
+</body>
+</html>
